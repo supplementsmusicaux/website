@@ -57,6 +57,9 @@ jobs:
         run: "npm ci"
       - name: Build with Next.js
         run: "npx --no-install next build"
+        env:
+          HYGRAPH_URL: ${{ secrets.HYGRAPH_URL }}
+          HYGRAPH_AUTH_TOKEN: ${{ secrets.HYGRAPH_AUTH_TOKEN }}
       - name: Static HTML export with Next.js
         run: "npx --no-install next export"
       - name: Upload artifact
