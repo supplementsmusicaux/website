@@ -49,12 +49,25 @@ export default function Home({ events }: Props) {
 
       <main>
         <h1>suppléments musicaux</h1>
-        <p>{events.length} Event(s)</p>
-        <ol>
-          {events.map((event) => (
-            <li key={event.id}>{event.title}</li>
-          ))}
-        </ol>
+        {events.map((event) => (
+          <div
+            key={event.id}
+            style={{
+              padding: 16,
+              display: "flex",
+              flexDirection: "row",
+              backgroundColor: event.backgroundColor?.hex,
+            }}
+          >
+            <img src={event.flyer?.url} />
+            <div style={{ paddingLeft: 16 }}>
+              <h3 style={{ color: "#FFF" }}>{event.title}</h3>
+              <p style={{ color: "rgba(255,255,255,0.7)" }}>
+                {event.description}
+              </p>
+            </div>
+          </div>
+        ))}
       </main>
     </>
   )
