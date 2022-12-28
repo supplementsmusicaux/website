@@ -9,8 +9,12 @@ on:
   push:
     branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Run this workflow manually from the Actions tab
   workflow_dispatch:
+
+  # Run this workflow when a 'deploy' event is dispatched via webhook
+  repository_dispatch:
+    types: [deploy]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
