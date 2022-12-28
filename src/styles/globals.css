@@ -9,6 +9,16 @@
   }
 }
 
+@font-face {
+  font-family: "SohneKraftig";
+  src: url("https://media.graphassets.com/1dZAAm1RTb6poQvN24z6");
+  src: url("https://media.graphassets.com/1dZAAm1RTb6poQvN24z6?#iefix") format("embedded-opentype"),
+    url("https://media.graphassets.com/OYB2sMfvSDs62sH8yJ0w") format("woff2"),
+    url("https://media.graphassets.com/BjKtBNp4TQ2QAjbHOPy9") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -19,6 +29,10 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+body {
+  font-family: "SohneKraftig";
 }
 
 a {
