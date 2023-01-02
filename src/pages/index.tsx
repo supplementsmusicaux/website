@@ -1,14 +1,15 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
+import Image from "next/image"
 import ReactMarkdown from "react-markdown"
 
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
-import { EventsQuery } from "../__generated__/graphql"
+import { UpcomingEventsQuery } from "../__generated__/graphql"
 import { parse, format } from "../utils"
 
 interface Props {
-  events: EventsQuery["events"]
+  events: UpcomingEventsQuery["events"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const { data } = await client.query({
@@ -64,7 +65,13 @@ export default function Home({ events }: Props) {
           >
             <div className="event-wrapper main-col">
               <div>
-                <img src={event.flyer?.url} />
+                {event.flyer && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={event.flyer.url || ""}
+                    alt={`Flyer für das Projekt "${event.title}"`}
+                  />
+                )}
               </div>
               <div
                 style={{
@@ -83,7 +90,7 @@ export default function Home({ events }: Props) {
                   ))}
                 </ul>
 
-                <ReactMarkdown children={event.description || ""} />
+                <ReactMarkdown>{event.description || ""}</ReactMarkdown>
               </div>
             </div>
           </div>
