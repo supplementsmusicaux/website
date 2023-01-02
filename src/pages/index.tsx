@@ -53,25 +53,26 @@ export default function Home({ events }: Props) {
       </Head>
 
       <main>
-        <h1>suppléments musicaux</h1>
+        <h1 className="main-col">suppléments musicaux</h1>
         {events.map((event) => (
           <div
             key={event.id}
-            className="event-wrapper"
             style={{
               backgroundColor: event.backgroundColor?.hex || "#444",
             }}
           >
-            <div>
-              <img src={event.flyer?.url} />
-            </div>
-            <div
-              style={{
-                color: event.textColor?.hex || "#FFF",
-              }}
-            >
-              <h3>{event.title}</h3>
-              <ReactMarkdown children={event.description || ""} />
+            <div className="event-wrapper main-col">
+              <div>
+                <img src={event.flyer?.url} />
+              </div>
+              <div
+                style={{
+                  color: event.textColor?.hex || "#FFF",
+                }}
+              >
+                <h3>{event.title}</h3>
+                <ReactMarkdown children={event.description || ""} />
+              </div>
             </div>
           </div>
         ))}

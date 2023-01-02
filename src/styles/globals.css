@@ -52,6 +52,14 @@ a {
   }
 }
 
+/* layouting, responsiveness */
+
+.main-col {
+  max-width: 1000px;
+  padding: 0 16px;
+  margin: 0 auto;
+}
+
 /* pages/index.tsx */
 
 .event-wrapper {
@@ -62,7 +70,9 @@ a {
 }
 .event-wrapper > div {
   flex: 1;
-  padding: 16px;
+}
+.event-wrapper > div + div {
+  padding-left: 16px;
 }
 .event-wrapper img {
   display: block;
@@ -95,5 +105,21 @@ a {
 
   background-color: rgba(0, 0, 0, 0.2);
   opacity: 1;
+}
+
+/* pages/events/index.tsx */
+
+.events-list {
+  list-style-type: none;
+  border-bottom: 2px solid #EEE;
+
+  font-size: .95rem;
+  letter-spacing: 0.025em;
+}
+
+.events-list li {
+  padding: 8px 0;
+
+  border-top: 2px solid #EEE;
 }
 
