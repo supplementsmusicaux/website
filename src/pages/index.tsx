@@ -12,7 +12,7 @@ interface Props {
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const { data } = await client.query({
     query: gql(`
-      query Events {
+      query UpcomingEvents {
         events {
           id
           title
