@@ -13,13 +13,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n      query Events {\n        events {\n          id\n          title\n          description\n\n          flyer {\n            url\n          }\n          backgroundColor {\n            hex\n          }\n\n          performances {\n            startingAt\n            location\n          }\n        }\n      }\n    ": types.EventsDocument,
+    "\n      query Events {\n        events {\n          id\n          title\n          description\n\n          flyer {\n            url\n          }\n          backgroundColor {\n            hex\n          }\n          textColor {\n            hex\n          }\n\n          performances {\n            startingAt\n            location\n          }\n        }\n      }\n    ": types.EventsDocument,
 };
 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n      query Events {\n        events {\n          id\n          title\n          description\n\n          flyer {\n            url\n          }\n          backgroundColor {\n            hex\n          }\n\n          performances {\n            startingAt\n            location\n          }\n        }\n      }\n    "): (typeof documents)["\n      query Events {\n        events {\n          id\n          title\n          description\n\n          flyer {\n            url\n          }\n          backgroundColor {\n            hex\n          }\n\n          performances {\n            startingAt\n            location\n          }\n        }\n      }\n    "];
+export function gql(source: "\n      query Events {\n        events {\n          id\n          title\n          description\n\n          flyer {\n            url\n          }\n          backgroundColor {\n            hex\n          }\n          textColor {\n            hex\n          }\n\n          performances {\n            startingAt\n            location\n          }\n        }\n      }\n    "): (typeof documents)["\n      query Events {\n        events {\n          id\n          title\n          description\n\n          flyer {\n            url\n          }\n          backgroundColor {\n            hex\n          }\n          textColor {\n            hex\n          }\n\n          performances {\n            startingAt\n            location\n          }\n        }\n      }\n    "];
 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

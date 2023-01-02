@@ -815,6 +815,7 @@ export type Event = Node & {
   /** User that created this document */
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']>;
+  details?: Maybe<Scalars['String']>;
   /** Get the document in other stages */
   documentInStages: Array<Event>;
   flyer?: Maybe<Asset>;
@@ -830,6 +831,7 @@ export type Event = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
+  textColor?: Maybe<Color>;
   title: Scalars['String'];
   /** The time the document was updated */
   updatedAt: Scalars['DateTime'];
@@ -921,8 +923,10 @@ export type EventCreateInput = {
   backgroundColor?: InputMaybe<ColorInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   description?: InputMaybe<Scalars['String']>;
+  details?: InputMaybe<Scalars['String']>;
   flyer?: InputMaybe<AssetCreateOneInlineInput>;
   performances?: InputMaybe<PerformanceCreateManyInlineInput>;
+  textColor?: InputMaybe<ColorInput>;
   title: Scalars['String'];
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
@@ -995,6 +999,25 @@ export type EventManyWhereInput = {
   description_not_starts_with?: InputMaybe<Scalars['String']>;
   /** All values starting with the given string. */
   description_starts_with?: InputMaybe<Scalars['String']>;
+  details?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  details_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  details_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  details_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  details_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  details_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  details_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  details_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  details_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  details_starts_with?: InputMaybe<Scalars['String']>;
   documentInStages_every?: InputMaybe<EventWhereStageInput>;
   documentInStages_none?: InputMaybe<EventWhereStageInput>;
   documentInStages_some?: InputMaybe<EventWhereStageInput>;
@@ -1082,6 +1105,8 @@ export enum EventOrderByInput {
   CreatedAtDesc = 'createdAt_DESC',
   DescriptionAsc = 'description_ASC',
   DescriptionDesc = 'description_DESC',
+  DetailsAsc = 'details_ASC',
+  DetailsDesc = 'details_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
@@ -1095,8 +1120,10 @@ export enum EventOrderByInput {
 export type EventUpdateInput = {
   backgroundColor?: InputMaybe<ColorInput>;
   description?: InputMaybe<Scalars['String']>;
+  details?: InputMaybe<Scalars['String']>;
   flyer?: InputMaybe<AssetUpdateOneInlineInput>;
   performances?: InputMaybe<PerformanceUpdateManyInlineInput>;
+  textColor?: InputMaybe<ColorInput>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -1120,6 +1147,8 @@ export type EventUpdateManyInlineInput = {
 export type EventUpdateManyInput = {
   backgroundColor?: InputMaybe<ColorInput>;
   description?: InputMaybe<Scalars['String']>;
+  details?: InputMaybe<Scalars['String']>;
+  textColor?: InputMaybe<ColorInput>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -1217,6 +1246,25 @@ export type EventWhereInput = {
   description_not_starts_with?: InputMaybe<Scalars['String']>;
   /** All values starting with the given string. */
   description_starts_with?: InputMaybe<Scalars['String']>;
+  details?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  details_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  details_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  details_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  details_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  details_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  details_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  details_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  details_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  details_starts_with?: InputMaybe<Scalars['String']>;
   documentInStages_every?: InputMaybe<EventWhereStageInput>;
   documentInStages_none?: InputMaybe<EventWhereStageInput>;
   documentInStages_some?: InputMaybe<EventWhereStageInput>;
@@ -3897,7 +3945,7 @@ export enum _SystemDateTimeFieldVariation {
 export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: string, title: string, description?: string | null, flyer?: { __typename?: 'Asset', url: string } | null, backgroundColor?: { __typename?: 'Color', hex: any } | null, performances: Array<{ __typename?: 'Performance', startingAt: any, location?: string | null }> }> };
+export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: string, title: string, description?: string | null, flyer?: { __typename?: 'Asset', url: string } | null, backgroundColor?: { __typename?: 'Color', hex: any } | null, textColor?: { __typename?: 'Color', hex: any } | null, performances: Array<{ __typename?: 'Performance', startingAt: any, location?: string | null }> }> };
 
 
-export const EventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"flyer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"backgroundColor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hex"}}]}},{"kind":"Field","name":{"kind":"Name","value":"performances"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startingAt"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}}]}}]}}]} as unknown as DocumentNode<EventsQuery, EventsQueryVariables>;
+export const EventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"flyer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"backgroundColor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hex"}}]}},{"kind":"Field","name":{"kind":"Name","value":"textColor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hex"}}]}},{"kind":"Field","name":{"kind":"Name","value":"performances"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startingAt"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}}]}}]}}]} as unknown as DocumentNode<EventsQuery, EventsQueryVariables>;

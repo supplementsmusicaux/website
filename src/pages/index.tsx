@@ -1,5 +1,7 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
+import ReactMarkdown from "react-markdown"
+
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
 import { EventsQuery } from "../__generated__/graphql"
@@ -20,6 +22,9 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             url
           }
           backgroundColor {
+            hex
+          }
+          textColor {
             hex
           }
 
@@ -52,19 +57,21 @@ export default function Home({ events }: Props) {
         {events.map((event) => (
           <div
             key={event.id}
+            className="event-wrapper"
             style={{
-              padding: 16,
-              display: "flex",
-              flexDirection: "row",
-              backgroundColor: event.backgroundColor?.hex,
+              backgroundColor: event.backgroundColor?.hex || "#444",
             }}
           >
-            <img src={event.flyer?.url} />
-            <div style={{ paddingLeft: 16 }}>
-              <h3 style={{ color: "#FFF" }}>{event.title}</h3>
-              <p style={{ color: "rgba(255,255,255,0.7)" }}>
-                {event.description}
-              </p>
+            <div>
+              <img src={event.flyer?.url} />
+            </div>
+            <div
+              style={{
+                color: event.textColor?.hex || "#FFF",
+              }}
+            >
+              <h3>{event.title}</h3>
+              <ReactMarkdown children={event.description || ""} />
             </div>
           </div>
         ))}

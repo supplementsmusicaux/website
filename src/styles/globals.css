@@ -33,6 +33,12 @@ body {
 
 body {
   font-family: "SohneKraftig";
+  font-weight: normal;
+  font-size: 62.5%;
+}
+
+h1, h2, h3, b, strong {
+  font-weight: normal;
 }
 
 a {
@@ -45,3 +51,49 @@ a {
     color-scheme: dark;
   }
 }
+
+/* pages/index.tsx */
+
+.event-wrapper {
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+}
+.event-wrapper > div {
+  flex: 1;
+  padding: 16px;
+}
+.event-wrapper img {
+  display: block;
+  width: 100%;
+
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+.event-wrapper h3 {
+  padding-bottom: 8px;
+
+  font-size: 1.8rem;
+}
+.event-wrapper p {
+  padding-bottom: 8px;
+
+  opacity: 0.8;
+
+  font-size: .95rem;
+  letter-spacing: 0.025em;
+}
+.event-wrapper a {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+}
+.event-wrapper a:hover, .event-wrapper a:active {
+  color: #FFF;
+}
+.event-wrapper strong {
+  padding: 2px 4px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 1;
+}
+
