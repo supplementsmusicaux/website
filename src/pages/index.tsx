@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown"
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
 import { EventsQuery } from "../__generated__/graphql"
+import { parse, format } from "../utils"
 
 interface Props {
   events: EventsQuery["events"]
@@ -28,7 +29,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             hex
           }
 
-          performances {
+          performances(orderBy: startingAt_ASC) {
             startingAt
             location
           }
@@ -71,6 +72,17 @@ export default function Home({ events }: Props) {
                 }}
               >
                 <h3>{event.title}</h3>
+                <ul>
+                  {event.performances.map((performance) => (
+                    <li key={performance.startingAt}>
+                      {[
+                        format(parse(performance.startingAt)),
+                        performance.location,
+                      ].join(", ")}
+                    </li>
+                  ))}
+                </ul>
+
                 <ReactMarkdown children={event.description || ""} />
               </div>
             </div>

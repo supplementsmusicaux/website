@@ -81,9 +81,18 @@ a {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
 }
 .event-wrapper h3 {
-  padding-bottom: 8px;
+  padding-bottom: 4px;
 
   font-size: 1.8rem;
+}
+.event-wrapper ul {
+  padding-bottom: 24px;
+
+  list-style-type: none;
+  opacity: 0.8;
+
+  font-size: .95rem;
+  letter-spacing: 0.025em;
 }
 .event-wrapper p {
   padding-bottom: 8px;
@@ -118,6 +127,7 @@ a {
 }
 
 .events-list li {
+  display: flex;
   padding: 8px 0;
 
   border-top: 2px solid #EEE;
