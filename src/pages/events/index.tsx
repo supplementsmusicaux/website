@@ -73,7 +73,6 @@ export default function Events({ events }: Props) {
             <li
               key={event.id}
               style={{
-                display: "flex",
                 color: event.backgroundColor?.hex || "#000",
               }}
             >

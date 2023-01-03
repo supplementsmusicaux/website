@@ -62,7 +62,7 @@ export default function Home({ events }: Props) {
           }}
         >
           <div className="event-wrapper main-col">
-            <div>
+            <div className="flyer">
               {event.flyer && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -72,6 +72,7 @@ export default function Home({ events }: Props) {
               )}
             </div>
             <div
+              className="info"
               style={{
                 color: event.textColor?.hex || "#FFF",
               }}

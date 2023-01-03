@@ -85,15 +85,32 @@ a {
 .event-wrapper {
   padding-top: 16px;
   padding-bottom: 16px;
-  display: flex;
-  flex-direction: row;
 }
-.event-wrapper > div {
-  flex: 1;
+.info {
+  padding-top: 16px;
 }
-.event-wrapper > div + div {
-  padding-left: 16px;
+
+@media screen and (min-width: 500px) {
+  .event-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .flyer {
+    flex: 1;
+  }
+  .info {
+    flex: 2;
+    padding-left: 16px;
+    padding-top: 0;
+  }
 }
+
+@media screen and (min-width: 800px) {
+  .flyer, .info {
+    flex: 1;
+  }
+}
+
 .event-wrapper img {
   display: block;
   width: 100%;
@@ -147,9 +164,29 @@ a {
 }
 
 .events-list li {
-  display: flex;
   padding: 8px 0;
 
   border-top: 2px solid #EEE;
+}
+.events-list li span {
+  display: block;
+  padding-bottom: 8px;
+}
+.events-list li span + span {
+  padding-bottom: 0;
+
+  color: #333;
+}
+
+@media screen and (min-width: 500px) {
+}
+
+@media screen and (min-width: 800px) {
+  .events-list li {
+    display: flex;
+  }
+  .events-list li span {
+    padding-bottom: 0;
+  }
 }
 
