@@ -53,9 +53,9 @@ export default function Events({ events }: Props) {
 
     return (
       <>
-        <span style={{ flex: 1 }}>{event.title}</span>
+        <span style={{ flex: 2 }}>{event.title}</span>
         <span style={{ flex: 2 }}>{dateInfo}</span>
-        <span style={{ flex: 2 }}>{locations.join(", ")}</span>
+        <span style={{ flex: 3 }}>{locations.join(", ")}</span>
       </>
     )
   }
@@ -67,8 +67,7 @@ export default function Events({ events }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main className="main-col">
-        <h1>suppléments musicaux</h1>
+      <div className="main-col">
         <ul className="events-list">
           {events.map((event) => (
             <li
@@ -82,7 +81,7 @@ export default function Events({ events }: Props) {
             </li>
           ))}
         </ul>
-      </main>
+      </div>
     </>
   )
 }

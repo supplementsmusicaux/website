@@ -56,15 +56,35 @@ a {
 
 .main-col {
   max-width: 1000px;
-  padding: 0 16px;
+  padding-right: 16px;
+  padding-left: 16px;
   margin: 0 auto;
+}
+
+.header {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.header, .header ul {
+  display: flex;
+  flex-direction: row;
+}
+.header ul {
+  flex: 1;
+
+  list-style-type: none;
+  justify-content: flex-end;
+}
+.header h1, .header a {
+  font-size: 0.95rem;
 }
 
 /* pages/index.tsx */
 
 .event-wrapper {
-  width: 100%;
-  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   display: flex;
   flex-direction: row;
 }
