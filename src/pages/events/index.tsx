@@ -8,9 +8,11 @@ import { gql } from "../../__generated__/gql"
 import client from "../../apollo-client"
 import { EventsQuery } from "../../__generated__/graphql"
 import { formatList, parse } from "../../utils"
+import { Layout } from "../../components/Layout"
 
 interface Props {
   events: EventsQuery["events"]
+  pages: EventsQuery["pages"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const { data } = await client.query({
@@ -29,6 +31,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             location
           }
         }
+        pages (where: { menuPosition_not: null }) {
+          slug
+          menuPosition
+          title
+        }
       }
     `),
   })
@@ -36,11 +43,12 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   return {
     props: {
       events: data.events,
+      pages: data.pages,
     },
   }
 }
 
-export default function Events({ events }: Props) {
+export default function Events({ events, pages }: Props) {
   const renderEvent = (event: Props["events"][0]): JSX.Element => {
     const locations: string[] = uniq(map(get("location"), event.performances))
     const dates = map(get("startingAt"), event.performances)
@@ -57,7 +65,7 @@ export default function Events({ events }: Props) {
   }
 
   return (
-    <>
+    <Layout pages={pages}>
       <Head>
         <title>suppléments musicaux – alle veranstaltungen</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -66,9 +74,8 @@ export default function Events({ events }: Props) {
       <div className="main-col">
         <ul className="events-list">
           {events.map((event) => (
-            <Link href={`/events/${event.slug}`}>
+            <Link key={event.slug} href={`/events/${event.slug}`}>
               <li
-                key={event.slug}
                 style={{
                   color: event.backgroundColor?.hex || "#000",
                 }}
@@ -79,6 +86,6 @@ export default function Events({ events }: Props) {
           ))}
         </ul>
       </div>
-    </>
+    </Layout>
   )
 }

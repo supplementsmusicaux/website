@@ -6,15 +6,17 @@ import client from "../../apollo-client"
 import { EventQuery } from "../../__generated__/graphql"
 import { EventContainer } from "../../components"
 import { format, parse } from "../../utils"
+import { Layout } from "../../components/Layout"
 
 interface Props {
   event: EventQuery["event"]
+  pages: EventQuery["pages"]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await client.query({
     query: gql(`
-      query EventSlugs {
+      query EventPaths {
         events {
           slug
         }
@@ -54,6 +56,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
             location
           }
         }
+        pages (where: { menuPosition_not: null }) {
+          slug
+          menuPosition
+          title
+        }
       }
     `
     ),
@@ -63,32 +70,36 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   return {
     props: {
       event: data.event,
+      pages: data.pages,
     },
   }
 }
 
-export default function EventPage({ event }: Props) {
+export default function EventPage({ event, pages }: Props) {
   if (!event) return null
 
   return (
-    <EventContainer
-      slug={event.slug}
-      title={event.title}
-      backgroundColor={event.backgroundColor?.hex}
-      textColor={event.textColor?.hex}
-      flyerUrl={event.flyer?.url}
-    >
-      <ul>
-        {event.performances.map((performance) => (
-          <li key={performance.startingAt}>
-            {[format(parse(performance.startingAt)), performance.location].join(
-              ", "
-            )}
-          </li>
-        ))}
-      </ul>
+    <Layout pages={pages}>
+      <EventContainer
+        slug={event.slug}
+        title={event.title}
+        backgroundColor={event.backgroundColor?.hex}
+        textColor={event.textColor?.hex}
+        flyerUrl={event.flyer?.url}
+      >
+        <ul>
+          {event.performances.map((performance) => (
+            <li key={performance.startingAt}>
+              {[
+                format(parse(performance.startingAt)),
+                performance.location,
+              ].join(", ")}
+            </li>
+          ))}
+        </ul>
 
-      <ReactMarkdown>{event.details || ""}</ReactMarkdown>
-    </EventContainer>
+        <ReactMarkdown>{event.details || ""}</ReactMarkdown>
+      </EventContainer>
+    </Layout>
   )
 }

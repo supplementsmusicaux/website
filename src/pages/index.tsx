@@ -5,19 +5,21 @@ import { DateTime } from "luxon"
 import { get, map, uniq } from "lodash/fp"
 import Link from "next/link"
 
+import { Layout } from "../components/Layout"
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
-import { UpcomingEventsQuery } from "../__generated__/graphql"
+import { StartQuery } from "../__generated__/graphql"
 import { EventContainer } from "../components"
 import { parse, formatList } from "../utils"
 
 interface Props {
-  events: UpcomingEventsQuery["events"]
+  events: StartQuery["events"]
+  pages: StartQuery["pages"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const { data } = await client.query({
     query: gql(`
-      query UpcomingEvents {
+      query Start {
         events {
           slug
           title
@@ -38,6 +40,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             location
           }
         }
+        pages (where: { menuPosition_not: null }) {
+          slug
+          menuPosition
+          title
+        }
       }
     `),
   })
@@ -45,13 +52,14 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   return {
     props: {
       events: data.events,
+      pages: data.pages,
     },
   }
 }
 
-export default function Home({ events }: Props) {
+export default function Home({ events, pages }: Props) {
   return (
-    <>
+    <Layout pages={pages}>
       <Head>
         <title>suppléments musicaux</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -65,6 +73,7 @@ export default function Home({ events }: Props) {
 
         return (
           <EventContainer
+            key={event.slug}
             slug={event.slug}
             title={event.title}
             backgroundColor={event.backgroundColor?.hex}
@@ -84,6 +93,6 @@ export default function Home({ events }: Props) {
           </EventContainer>
         )
       })}
-    </>
+    </Layout>
   )
 }

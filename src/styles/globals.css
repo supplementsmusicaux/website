@@ -90,6 +90,14 @@ a {
 
   font-size: 1.8rem;
 }
+.text-styles h4 {
+  padding-bottom: 4px;
+
+  font-size: 1.2rem;
+}
+.text-styles * + h4 {
+  margin-top: 16px;
+}
 .text-styles ul {
   padding-bottom: 24px;
 
@@ -100,6 +108,7 @@ a {
   letter-spacing: 0.025em;
 }
 .text-styles p {
+  max-width: 520px;
   padding-bottom: 8px;
 
   opacity: 0.8;
