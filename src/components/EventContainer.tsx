@@ -24,7 +24,7 @@ export const EventContainer = ({
         backgroundColor: backgroundColor || "#444",
       }}
     >
-      <div className="event-wrapper main-col">
+      <div className="event-wrapper main-col text-styles">
         <div className="flyer">
           {flyerUrl && (
             // eslint-disable-next-line @next/next/no-img-element
