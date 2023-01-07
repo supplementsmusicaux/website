@@ -1,11 +1,13 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
-import { uniq, map, get, last } from "lodash/fp"
+import Link from "next/link"
+import { uniq, map, get } from "lodash/fp"
+import { DateTime } from "luxon"
 
 import { gql } from "../../__generated__/gql"
 import client from "../../apollo-client"
 import { EventsQuery } from "../../__generated__/graphql"
-import { parse, formatList, formatShort } from "../../utils"
+import { formatList, parse } from "../../utils"
 
 interface Props {
   events: EventsQuery["events"]
@@ -15,7 +17,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     query: gql(`
       query Events {
         events {
-          id
+          slug
           title
 
           backgroundColor {
@@ -40,21 +42,15 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 export default function Events({ events }: Props) {
   const renderEvent = (event: Props["events"][0]): JSX.Element => {
-    let dateInfo: string = ""
-    if (event.performances.length === 1)
-      dateInfo = formatShort(parse(event.performances[0].startingAt))
-    if (event.performances.length > 1) {
-      dateInfo = formatList(
-        parse(event.performances[0].startingAt),
-        parse(last(event.performances)?.startingAt)
-      )
-    }
     const locations: string[] = uniq(map(get("location"), event.performances))
+    const dates = map(get("startingAt"), event.performances)
 
     return (
       <>
         <span style={{ flex: 2 }}>{event.title}</span>
-        <span style={{ flex: 2 }}>{dateInfo}</span>
+        <span style={{ flex: 2 }}>
+          {formatList(map<string, DateTime>(parse, dates))}
+        </span>
         <span style={{ flex: 3 }}>{locations.join(", ")}</span>
       </>
     )
@@ -70,14 +66,16 @@ export default function Events({ events }: Props) {
       <div className="main-col">
         <ul className="events-list">
           {events.map((event) => (
-            <li
-              key={event.id}
-              style={{
-                color: event.backgroundColor?.hex || "#000",
-              }}
-            >
-              {renderEvent(event)}
-            </li>
+            <Link href={`/events/${event.slug}`}>
+              <li
+                key={event.slug}
+                style={{
+                  color: event.backgroundColor?.hex || "#000",
+                }}
+              >
+                {renderEvent(event)}
+              </li>
+            </Link>
           ))}
         </ul>
       </div>

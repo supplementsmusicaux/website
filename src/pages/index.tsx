@@ -1,12 +1,15 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
-import Image from "next/image"
 import ReactMarkdown from "react-markdown"
+import { DateTime } from "luxon"
+import { get, map, uniq } from "lodash/fp"
+import Link from "next/link"
 
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
 import { UpcomingEventsQuery } from "../__generated__/graphql"
-import { parse, format } from "../utils"
+import { EventContainer } from "../components"
+import { parse, formatList } from "../utils"
 
 interface Props {
   events: UpcomingEventsQuery["events"]
@@ -16,7 +19,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     query: gql(`
       query UpcomingEvents {
         events {
-          id
+          slug
           title
           description
 
@@ -54,46 +57,33 @@ export default function Home({ events }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {events.map((event) => (
-        <div
-          key={event.id}
-          style={{
-            backgroundColor: event.backgroundColor?.hex || "#444",
-          }}
-        >
-          <div className="event-wrapper main-col">
-            <div className="flyer">
-              {event.flyer && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={event.flyer.url || ""}
-                  alt={`Flyer für das Projekt "${event.title}"`}
-                />
-              )}
-            </div>
-            <div
-              className="info"
-              style={{
-                color: event.textColor?.hex || "#FFF",
-              }}
-            >
-              <h3>{event.title}</h3>
-              <ul>
-                {event.performances.map((performance) => (
-                  <li key={performance.startingAt}>
-                    {[
-                      format(parse(performance.startingAt)),
-                      performance.location,
-                    ].join(", ")}
-                  </li>
-                ))}
-              </ul>
+      {events.map((event) => {
+        const dates = map(get("startingAt"), event.performances)
+        const locations: string[] = uniq(
+          map(get("location"), event.performances)
+        )
 
-              <ReactMarkdown>{event.description || ""}</ReactMarkdown>
-            </div>
-          </div>
-        </div>
-      ))}
+        return (
+          <EventContainer
+            slug={event.slug}
+            title={event.title}
+            backgroundColor={event.backgroundColor?.hex}
+            textColor={event.textColor?.hex}
+            flyerUrl={event.flyer?.url}
+          >
+            <ul>
+              <li>{formatList(map<string, DateTime>(parse, dates))}</li>
+              <li>{locations.join(", ")}</li>
+            </ul>
+
+            <ReactMarkdown>{event.description || ""}</ReactMarkdown>
+            <p>
+              <br />
+              <Link href={`/events/${event.slug}`}>Weitere Informationen</Link>
+            </p>
+          </EventContainer>
+        )
+      })}
     </>
   )
 }

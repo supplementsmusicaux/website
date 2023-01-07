@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import { last } from "lodash/fp"
 
 export const parse = (input: string): DateTime => {
   return DateTime.fromISO(input)
@@ -15,7 +16,7 @@ export const formatShort = (input: DateTime): string => {
   return input.setLocale("de").toLocaleString(DateTime.DATE_FULL)
 }
 
-export const formatList = (a: DateTime, b: DateTime): string => {
+export const formatRange = (a: DateTime, b: DateTime): string => {
   let firstFormat = "d."
   if (a.year !== b.year) {
     firstFormat += " LLLL yyyy"
@@ -27,6 +28,16 @@ export const formatList = (a: DateTime, b: DateTime): string => {
     a.setLocale("de").toFormat(firstFormat),
     b.setLocale("de").toFormat("d. LLLL yyyy"),
   ].join(" – ")
+}
+
+export const formatList = (dates: DateTime[]): string => {
+  if (dates.length === 1) {
+    return formatShort(dates[0])
+  } else if (dates.length > 1) {
+    return formatRange(dates[0], last(dates) as DateTime)
+  } else {
+    return ""
+  }
 }
 
 const formatTime = (input: DateTime): string => {
