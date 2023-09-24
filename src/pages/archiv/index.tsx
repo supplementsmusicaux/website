@@ -5,24 +5,23 @@ import { DateTime } from "luxon"
 import { get, map, uniq } from "lodash/fp"
 import Link from "next/link"
 
-import { Layout } from "../components/Layout"
-import { gql } from "../__generated__/gql"
-import client from "../apollo-client"
-import { HomeQuery } from "../__generated__/graphql"
-import { EventContainer } from "../components"
-import { parse, formatList } from "../utils"
+import { Layout } from "../../components/Layout"
+import { gql } from "../../__generated__/gql"
+import client from "../../apollo-client"
+import { AllEventsQuery } from "../../__generated__/graphql"
+import { EventContainer } from "../../components"
+import { parse, formatList } from "../../utils"
 
 interface Props {
-  events: HomeQuery["events"]
-  pages: HomeQuery["pages"]
-  content: HomeQuery["content"]
+  events: AllEventsQuery["events"]
+  pages: AllEventsQuery["pages"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const cutoffDate = DateTime.now().minus({ weeks: 2 }).toISODate()
+  const today = DateTime.now().toISODate()
   const { data } = await client.query({
     query: gql(`
-      query Home($cutoffDate: Date!) {
-        events(where: {activeUntil_gte: $cutoffDate}, orderBy: activeUntil_ASC) {
+      query AllEvents($today: Date!) {
+        events(where: {activeUntil_lt: $today}, orderBy: activeUntil_DESC) {
           slug
           title
           description
@@ -47,13 +46,10 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
           menuPosition
           title
         }
-        content: pages (where: { slug: "startseite" }) {
-          content
-        }
       }
     `),
     variables: {
-      cutoffDate,
+      today,
     },
   })
 
@@ -61,31 +57,17 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     props: {
       events: data.events,
       pages: data.pages,
-      content: data.content,
     },
   }
 }
 
-export default function Home({ events, pages, content }: Props) {
+export default function AllEvents({ events, pages }: Props) {
   return (
-    <Layout pages={pages} isHome={true}>
+    <Layout pages={pages}>
       <Head>
         <title>suppléments musicaux</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <div className="hero">
-        <div className="main-col text-styles">
-          <ReactMarkdown>{content?.[0]?.content || ""}</ReactMarkdown>
-          <p className="regular">
-            <Link href="/about">mehr über uns</Link>
-          </p>
-        </div>
-      </div>
-
-      <div className="main-col text-styles">
-        <h4>aktuell</h4>
-      </div>
 
       <div className="events-wrapper">
         {events.map((event) => {
@@ -122,8 +104,8 @@ export default function Home({ events, pages, content }: Props) {
 
       <div className="main-col text-styles">
         <p>
-          schau dir die vergangenen veranstaltungen im{" "}
-          <Link href="/archiv">archiv</Link> an.
+          die restlichen vergangenen veranstaltungen sind wir noch am erfassen,
+          sie werden in zukunft hier erscheinen.
         </p>
       </div>
     </Layout>

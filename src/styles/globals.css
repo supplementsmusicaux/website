@@ -32,12 +32,14 @@ body {
 }
 
 body {
+  padding-bottom: 32px;
+
   font-family: "SohneKraftig";
   font-weight: normal;
   font-size: 62.5%;
 }
 
-h1, h2, h3, b, strong {
+h1, h2, h3, h4, h5, b, strong {
   font-weight: normal;
 }
 
@@ -63,7 +65,7 @@ a {
 
 .header {
   padding-top: 16px;
-  padding-bottom: 16px;
+  padding-bottom: 8px;
 }
 
 .header, .header ul {
@@ -79,8 +81,39 @@ a {
 .header ul li + li {
   padding-left: 16px;
 }
-.header h1, .header a {
-  font-size: 0.95rem;
+.header ul a {
+  font-size: .95rem;
+  letter-spacing: 0.025em;
+}
+
+.header h1 {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  font-size: 1.2rem;
+}
+.header.home h1 {
+  line-height: 1.1rem;
+  font-size: 1.2rem;
+}
+.header.home h1 span span {
+  display: block;
+}
+.header a:hover {
+  margin-bottom: -2px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+}
+
+.logo {
+  height: 0.68em;
+  width: 0.9em;
+  margin-right: 0.3em;
+}
+.header.home .logo {
+  height: 1.5em;
+  width: 1.995em;
 }
 
 /* text-styles */
@@ -89,11 +122,13 @@ a {
   padding-bottom: 4px;
 
   font-size: 1.8rem;
+  letter-spacing: -0.01em;
 }
 .text-styles h4 {
   padding-bottom: 4px;
 
   font-size: 1.2rem;
+  letter-spacing: 0em;
 }
 .text-styles * + h4 {
   margin-top: 16px;
@@ -130,8 +165,42 @@ a {
   opacity: 1;
 }
 
+.hero {
+  /* background-color: #F2505B; */
+  background: linear-gradient(167deg, #F2505B 14.54%, rgba(242, 80, 91, 0.00) 100%), #425FA6;
+}
+.hero .text-styles  {
+  margin-top: 16px;
+  margin-bottom: 64px;
+  padding: 16px 12px 64px 12px;
+
+  /* border: 3px solid #F2505B;
+  border-width: 3px 0; */
+  /* margin: 16px 0 64px 0;
+  padding: 16px 12px 64px 12px;
+  background-color: #F2505B; */
+}
+.hero .text-styles  p {
+  opacity: 1;
+
+  color: #FFF;
+  font-size: 1.2rem;
+  letter-spacing: 0em;
+}
+.hero .text-styles p.regular {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: .95rem;
+  letter-spacing: 0.025em;
+}
+.hero .text-styles a:hover, .hero .text-styles a:active {
+  color: #FFF;
+}
+
 /* pages/index.tsx */
 
+.events-wrapper {
+  padding-bottom: 16px;
+}
 .event-wrapper {
   padding-top: 16px;
   padding-bottom: 16px;
@@ -168,7 +237,7 @@ a {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* pages/events/index.tsx */
+/* pages/archiv/index.tsx */
 
 .events-list {
   list-style-type: none;

@@ -34,7 +34,11 @@ export const formatList = (dates: DateTime[]): string => {
   if (dates.length === 1) {
     return formatShort(dates[0])
   } else if (dates.length > 1) {
-    return formatRange(dates[0], last(dates) as DateTime)
+    if (dates[0].hasSame(last(dates) as DateTime, "day")) {
+      return formatShort(dates[0])
+    } else {
+      return formatRange(dates[0], last(dates) as DateTime)
+    }
   } else {
     return ""
   }

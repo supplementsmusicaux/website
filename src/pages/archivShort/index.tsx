@@ -15,10 +15,11 @@ interface Props {
   pages: EventsQuery["pages"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
+  const today = DateTime.now().toISODate()
   const { data } = await client.query({
     query: gql(`
-      query Events {
-        events {
+      query Events($today: Date!) {
+        events(where: {activeUntil_lt: $today}, orderBy: activeUntil_DESC) {
           slug
           title
 
@@ -38,6 +39,9 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
         }
       }
     `),
+    variables: {
+      today,
+    },
   })
 
   return {
@@ -74,7 +78,7 @@ export default function Events({ events, pages }: Props) {
       <div className="main-col">
         <ul className="events-list">
           {events.map((event) => (
-            <Link key={event.slug} href={`/events/${event.slug}`}>
+            <Link key={event.slug} href={`/archiv/${event.slug}`}>
               <li
                 style={{
                   color: event.backgroundColor?.hex || "#000",

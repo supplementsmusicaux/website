@@ -37,7 +37,7 @@ export const EventContainer = ({
             color: textColor || "#FFF",
           }}
         >
-          <Link href={`/events/${slug}`}>
+          <Link href={`/archiv/${slug}`}>
             <h3>{title}</h3>
           </Link>
           {children}
