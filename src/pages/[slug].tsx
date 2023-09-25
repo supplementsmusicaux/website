@@ -64,7 +64,7 @@ export default function Page({ page, pages }: Props) {
 
   return (
     <Layout pages={pages}>
-      <div className="main-col text-styles">
+      <div className="main-col text-styles text-page">
         <ReactMarkdown>{page.content || ""}</ReactMarkdown>
       </div>
     </Layout>

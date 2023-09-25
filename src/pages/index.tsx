@@ -78,7 +78,7 @@ export default function Home({ events, pages, content }: Props) {
         <div className="main-col text-styles inverted">
           <ReactMarkdown>{content?.[0]?.content || ""}</ReactMarkdown>
           <p className="regular">
-            <Link href="/about">mehr über uns</Link>
+            <Link href="/about">mehr</Link>
           </p>
         </div>
       </div>
@@ -122,8 +122,8 @@ export default function Home({ events, pages, content }: Props) {
 
       <div className="main-col text-styles">
         <p>
-          schau dir die vergangenen veranstaltungen im{" "}
-          <Link href="/archiv">archiv</Link> an.
+          Schau dir die vergangenen Veranstaltungen im{" "}
+          <Link href="/archiv">Archiv</Link> an.
         </p>
       </div>
     </Layout>

@@ -225,11 +225,13 @@ a {
   padding: 16px 12px 64px 12px;
 }
 .hero .text-styles  p {
+  max-width: 420px;
+
   opacity: 1;
 
   color: var(--white);
-  font-size: 1.2rem;
-  letter-spacing: 0em;
+  font-size: 1.8rem;
+  letter-spacing: -0.01em;
 }
 .hero .text-styles p.regular {
   font-size: .95rem;
@@ -315,5 +317,11 @@ a {
   .events-list li span {
     padding-bottom: 0;
   }
+}
+
+/* Text pages */
+
+.text-page {
+  padding-top: 32px;
 }
 
