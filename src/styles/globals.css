@@ -68,22 +68,41 @@ a {
   padding-bottom: 8px;
 }
 
-.header, .header ul {
+.header {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 .header ul {
   flex: 1;
-
-  list-style-type: none;
-  justify-content: flex-end;
 }
-.header ul li + li {
-  padding-left: 16px;
+.header ul li {
+  text-align: right;
+}
+@media screen and (min-width: 500px) {
+  .header ul {
+    display: flex;
+    flex-direction: row;
+  }
+  .header ul {
+    justify-content: flex-end;
+  }
+  .header ul li + li {
+    padding-left: 16px;
+  }
+}
+.header ul {
+  list-style-type: none;
 }
 .header ul a {
   font-size: .95rem;
   letter-spacing: 0.025em;
+}
+.header ul a, .header ul a:visited {
+  color: #333;
+}
+.header ul a:hover {
+  color: #F2505B;
 }
 
 .header h1 {
