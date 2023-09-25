@@ -19,12 +19,17 @@ export const EventContainer = ({
 }: Props) => {
   return (
     <div
+      className="event-row"
       key={slug}
-      style={{
-        backgroundColor: backgroundColor || "#444",
-      }}
+      style={
+        backgroundColor
+          ? {
+              backgroundColor: backgroundColor,
+            }
+          : undefined
+      }
     >
-      <div className="event-wrapper main-col text-styles">
+      <div className="event-wrapper main-col text-styles inverted">
         <div className="flyer">
           {flyerUrl && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -33,9 +38,13 @@ export const EventContainer = ({
         </div>
         <div
           className="info"
-          style={{
-            color: textColor || "#FFF",
-          }}
+          style={
+            textColor
+              ? {
+                  color: textColor,
+                }
+              : undefined
+          }
         >
           <Link href={`/archiv/${slug}`}>
             <h3>{title}</h3>

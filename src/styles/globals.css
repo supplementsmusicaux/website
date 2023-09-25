@@ -1,3 +1,18 @@
+/* colors */
+
+:root {
+  --text: #333;
+  --default-event-background: #444;
+  --blue: #425FA6;
+  --red: #F2505B;
+  --red-0: rgba(242, 80, 91, 0.00);
+  --white: #FFF;
+  --white-80: rgba(255, 255, 255, 0.8);
+  --white-20: rgba(0, 0, 0, 0.2);
+  --black: #000;
+  --black-10: rgba(0, 0, 0, 0.1)
+}
+
 /* font */
 
 @font-face {
@@ -88,10 +103,10 @@ a {
   letter-spacing: 0.025em;
 }
 .header ul a, .header ul a:visited {
-  color: #333;
+  color: var(--text);
 }
 .header ul a:hover {
-  color: #F2505B;
+  color: var(--red);
 }
 
 .header h1 {
@@ -154,8 +169,6 @@ a {
   max-width: 520px;
   padding-bottom: 8px;
 
-  opacity: 0.8;
-
   font-size: .95rem;
   letter-spacing: 0.025em;
 }
@@ -163,21 +176,48 @@ a {
   border-bottom-style: solid;
   border-bottom-width: 2px;
 }
-.text-styles a:hover, .text-styles a:active {
-  color: #FFF;
-}
 .text-styles strong {
   padding: 2px 4px;
 
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--white-20);
   opacity: 1;
+}
+
+.text-styles h3,
+.text-styles h4,
+.text-styles p,
+.text-styles ul,
+.text-styles a,
+.text-styles a:visited {
+  color: var(--text);
+}
+.text-styles a:hover,
+.text-styles a:active {
+  color: var(--black);
+}
+
+.text-styles.inverted h3,
+.text-styles.inverted h4,
+.text-styles.inverted p,
+.text-styles.inverted ul,
+.text-styles.inverted a,
+.text-styles.inverted a:visited,
+.text-styles.inverted a:hover h3,
+.text-styles.inverted a:active h3 {
+  color: var(--white-80);
+}
+.text-styles.inverted a:hover,
+.text-styles.inverted a:active,
+.text-styles.inverted a h3,
+.text-styles.inverted a:visited h3
+ {
+  color: var(--white);
 }
 
 /* hero element (home) */
 
 .hero {
-  /* background-color: #F2505B; */
-  background: linear-gradient(167deg, #F2505B 14.54%, rgba(242, 80, 91, 0.00) 100%), #425FA6;
+  background: linear-gradient(167deg, var(--red) 14.54%, var(--red-0) 100%), var(--blue);
 }
 .hero .text-styles  {
   margin-top: 16px;
@@ -187,17 +227,13 @@ a {
 .hero .text-styles  p {
   opacity: 1;
 
-  color: #FFF;
+  color: var(--white);
   font-size: 1.2rem;
   letter-spacing: 0em;
 }
 .hero .text-styles p.regular {
-  color: rgba(255, 255, 255, 0.8);
   font-size: .95rem;
   letter-spacing: 0.025em;
-}
-.hero .text-styles a:hover, .hero .text-styles a:active {
-  color: #FFF;
 }
 
 /* events-wrapper (list of events) */
@@ -208,6 +244,9 @@ a {
 
 /* EventContainer */
 
+.event-row {
+  background-color: var(--default-event-background);
+}
 .event-wrapper {
   padding-top: 16px;
   padding-bottom: 16px;
@@ -241,7 +280,7 @@ a {
   display: block;
   width: 100%;
 
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 16px var(--black-10);
 }
 
 /* Archiv */
@@ -266,7 +305,7 @@ a {
 .events-list li span + span {
   padding-bottom: 0;
 
-  color: #333;
+  color: var(--text);
 }
 
 @media screen and (min-width: 800px) {

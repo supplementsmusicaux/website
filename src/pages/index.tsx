@@ -75,7 +75,7 @@ export default function Home({ events, pages, content }: Props) {
       </Head>
 
       <div className="hero">
-        <div className="main-col text-styles">
+        <div className="main-col text-styles inverted">
           <ReactMarkdown>{content?.[0]?.content || ""}</ReactMarkdown>
           <p className="regular">
             <Link href="/about">mehr über uns</Link>
