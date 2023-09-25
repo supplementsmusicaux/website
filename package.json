@@ -19,7 +19,7 @@
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.1",
     "lodash": "^4.17.21",
-    "luxon": "^3.2.0",
+    "luxon": ">=3.2.1",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -30,6 +30,11 @@
     "@graphql-codegen/cli": "^2.16.2",
     "@graphql-codegen/client-preset": "^1.2.4",
     "@types/lodash": "^4.14.191",
-    "@types/luxon": "^3.2.0"
+    "@types/luxon": "^3.2.0",
+    "graphql": ">=16.8.1",
+    "json5": ">=1.0.2",
+    "word-wrap": ">=1.2.4",
+    "semver": ">=7.5.2",
+    "undici": ">=5.19.1"
   }
 }
