@@ -9,7 +9,7 @@ import { Layout } from "../components/Layout"
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
 import { HomeQuery } from "../__generated__/graphql"
-import { EventContainer } from "../components"
+import { EventContainer, NewsletterSignupForm } from "../components"
 import { parse, formatList } from "../utils"
 
 interface Props {
@@ -126,6 +126,16 @@ export default function Home({ events, pages, content }: Props) {
           <Link href="/archiv">Archiv</Link> an.
         </p>
       </div>
+
+      <NewsletterSignupForm
+        id="100835912863188758"
+        title="newsletter"
+        description="Erhalte Infos über unsere Projekte und Konzerte."
+        submit="Anmelden"
+        statusSubmitting="Speichern …"
+        statusSuccess="Vielen Dank! Du wirst in Kürze ein E-Mail zur Bestätigung deiner Anmeldung erhalten."
+        statusError="Die Anmeldung hat leider nicht geklappt! Melde dich bitte per E-Mail bei uns."
+      />
     </Layout>
   )
 }

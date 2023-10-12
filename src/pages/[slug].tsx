@@ -5,8 +5,10 @@ import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
 import { PageQuery } from "../__generated__/graphql"
 import { Layout } from "../components/Layout"
+import { NewsletterSignupForm } from "../components"
 
 interface Props {
+  slug?: string
   page: PageQuery["page"]
   pages: PageQuery["pages"]
 }
@@ -53,13 +55,14 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
   return {
     props: {
+      slug,
       page: data.page,
       pages: data.pages,
     },
   }
 }
 
-export default function Page({ page, pages }: Props) {
+export default function Page({ slug, page, pages }: Props) {
   if (!page) return null
 
   return (
@@ -67,6 +70,18 @@ export default function Page({ page, pages }: Props) {
       <div className="main-col text-styles text-page">
         <ReactMarkdown>{page.content || ""}</ReactMarkdown>
       </div>
+      {slug === "amicaux" && (
+        <NewsletterSignupForm
+          id="100836031458183082"
+          title="anmeldung"
+          includeName
+          description="Melde dich hier mit deinem Namen und deiner E-Mailadresse an, um mehr Informationen (inkl. Kontoangaben) zu den suppléments amicaux per E-Mail zu erhalten."
+          submit="Anmelden"
+          statusSubmitting="Speichern …"
+          statusSuccess="Vielen Dank! Du wirst in Kürze ein E-Mail zur Bestätigung deiner Anmeldung erhalten."
+          statusError="Die Anmeldung hat leider nicht geklappt! Melde dich bitte per E-Mail bei uns."
+        />
+      )}
     </Layout>
   )
 }

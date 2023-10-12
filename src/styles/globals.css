@@ -3,14 +3,16 @@
 :root {
   --text: #333;
   --default-event-background: #444;
-  --blue: #425FA6;
-  --red: #F2505B;
+  --blue: rgb(66, 95, 166);
+  --blue-90: rgba(66, 95, 166, 0.9);
+  --red: rgb(242, 80, 91);
   --red-0: rgba(242, 80, 91, 0.00);
   --white: #FFF;
+  --white-20: rgba(255, 255, 255, 0.2);
   --white-80: rgba(255, 255, 255, 0.8);
-  --white-20: rgba(0, 0, 0, 0.2);
   --black: #000;
-  --black-10: rgba(0, 0, 0, 0.1)
+  --black-10: rgba(0, 0, 0, 0.1);
+  --black-20: rgba(0, 0, 0, 0.2);
 }
 
 /* font */
@@ -148,7 +150,7 @@ a {
   letter-spacing: -0.01em;
 }
 .text-styles h4 {
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 
   font-size: 1.2rem;
   letter-spacing: 0em;
@@ -179,7 +181,7 @@ a {
 .text-styles strong {
   padding: 2px 4px;
 
-  background-color: var(--white-20);
+  background-color: var(--black-20);
   opacity: 1;
 }
 
@@ -325,3 +327,70 @@ a {
   padding-top: 32px;
 }
 
+/* Newsletter signup form */
+
+.newsletter-signup-form {
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
+.newsletter-signup-form h4 {
+  color: var(--blue);
+}
+.newsletter-signup-form .inner {
+  padding: 16px 0;
+  background-color: var(--blue);
+}
+
+.text-styles.inverted p.loading,
+.text-styles.inverted p.success {
+  color: var(--white);
+}
+.text-styles.inverted p.error {
+  color: var(--red);
+}
+
+.newsletter-signup-form form {
+  max-width: 360px;
+  margin-bottom: 8px;
+}
+.newsletter-signup-form form input {
+  display: block;
+  width: 100%;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+
+  outline: none;
+  border: none;
+}
+.newsletter-signup-form form button {
+  display: block;
+  padding: 4px 8px;
+
+  outline: none;
+  border: none;
+
+  background-color: var(--blue);
+  color: var(--white);
+  border: 2px solid var(--white);
+}
+.newsletter-signup-form form button:hover {
+  background-color: var(--white-20);
+  cursor: pointer;
+}
+.newsletter-signup-form form button:active {
+  color: var(--blue);
+  background-color: var(--white);
+}
+
+@media screen and (min-width: 520px) {
+  .newsletter-signup-form form {
+    display: flex;
+    flex-direction: row;
+  }
+  .newsletter-signup-form form input {
+    width: unset;
+    flex: 1;
+    margin-right: 8px;
+    margin-bottom: 0;
+  }
+}
