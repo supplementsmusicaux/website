@@ -184,6 +184,13 @@ a {
   background-color: var(--black-20);
   opacity: 1;
 }
+.text-styles blockquote {
+  padding-left: 8px;
+  border-left: 2px solid var(--black-20);
+}
+.text-styles blockquote p:last-of-type {
+  padding-bottom: 0;
+}
 
 .text-styles h3,
 .text-styles h4,
