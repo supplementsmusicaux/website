@@ -9,7 +9,7 @@ import { Layout } from "../components/Layout"
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
 import { HomeQuery } from "../__generated__/graphql"
-import { EventContainer, NewsletterSignupForm } from "../components"
+import { EventContainer, EventTable, NewsletterSignupForm } from "../components"
 import { parse, formatList } from "../utils"
 
 interface Props {
@@ -67,6 +67,35 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 }
 
 export default function Home({ events, pages, content }: Props) {
+  const [event, ...nextEvents] = events
+
+  const renderCurrentEvent = () => {
+    const dates = map(get("startingAt"), event.performances)
+    const locations: string[] = uniq(map(get("location"), event.performances))
+
+    return (
+      <EventContainer
+        key={event.slug}
+        slug={event.slug}
+        title={event.title}
+        backgroundColor={event.backgroundColor?.hex}
+        textColor={event.textColor?.hex}
+        flyerUrl={event.flyer?.url}
+      >
+        <ul>
+          <li>{formatList(map<string, DateTime>(parse, dates))}</li>
+          <li>{locations.join(", ")}</li>
+        </ul>
+
+        <ReactMarkdown>{event.description || ""}</ReactMarkdown>
+        <p>
+          <br />
+          <Link href={`/archiv/${event.slug}`}>Weitere Informationen</Link>
+        </p>
+      </EventContainer>
+    )
+  }
+
   return (
     <Layout pages={pages} isHome={true}>
       <Head>
@@ -87,38 +116,16 @@ export default function Home({ events, pages, content }: Props) {
         <h4>aktuell</h4>
       </div>
 
-      <div className="events-wrapper">
-        {events.map((event) => {
-          const dates = map(get("startingAt"), event.performances)
-          const locations: string[] = uniq(
-            map(get("location"), event.performances)
-          )
+      <div className="events-wrapper">{renderCurrentEvent()}</div>
 
-          return (
-            <EventContainer
-              key={event.slug}
-              slug={event.slug}
-              title={event.title}
-              backgroundColor={event.backgroundColor?.hex}
-              textColor={event.textColor?.hex}
-              flyerUrl={event.flyer?.url}
-            >
-              <ul>
-                <li>{formatList(map<string, DateTime>(parse, dates))}</li>
-                <li>{locations.join(", ")}</li>
-              </ul>
-
-              <ReactMarkdown>{event.description || ""}</ReactMarkdown>
-              <p>
-                <br />
-                <Link href={`/archiv/${event.slug}`}>
-                  Weitere Informationen
-                </Link>
-              </p>
-            </EventContainer>
-          )
-        })}
-      </div>
+      {nextEvents.length > 0 && (
+        <div className="main-col events-list-wrapper">
+          <div className="text-styles">
+            <h4>nächste veranstaltungen</h4>
+          </div>
+          <EventTable events={nextEvents} />
+        </div>
+      )}
 
       <div className="main-col text-styles">
         <p>

@@ -289,7 +289,13 @@ a {
 
 /* Archiv */
 
+/* short */
+.events-list-wrapper {
+  margin-top: 48px;
+}
 .events-list {
+  margin-bottom: 16px;
+
   list-style-type: none;
   border-bottom: 2px solid #EEE;
 
@@ -318,6 +324,9 @@ a {
   }
   .events-list li span {
     padding-bottom: 0;
+  }
+  .events-list li span + span {
+    padding-left: 16px;
   }
 }
 
