@@ -26,6 +26,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
           slug
           title
           description
+          previewOnly
 
           flyer {
             url

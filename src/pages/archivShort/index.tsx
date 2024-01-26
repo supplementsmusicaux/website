@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const { data } = await client.query({
     query: gql(`
       query Events($today: Date!) {
-        events(where: {activeUntil_lt: $today}, orderBy: activeUntil_DESC) {
+        events(where: {previewOnly: false, activeUntil_lt: $today}, orderBy: activeUntil_DESC) {
           slug
           title
 

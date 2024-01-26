@@ -17,7 +17,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await client.query({
     query: gql(`
       query EventPaths {
-        events {
+        events(where: {previewOnly: false}) {
           slug
         }
       }

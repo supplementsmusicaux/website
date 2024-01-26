@@ -12,13 +12,23 @@ export const EventTable = ({ events }: { events: Events }) => {
     const locations: string[] = uniq(map(get("location"), event.performances))
     const dates = map(get("startingAt"), event.performances)
 
+    const renderTitle = (event: Events[0]) => {
+      if (event.previewOnly) return event.title
+
+      return (
+        <Link key={event.slug} href={`/archiv/${event.slug}`}>
+          {event.title}
+        </Link>
+      )
+    }
+
     return (
       <>
-        <span style={{ flex: 4 }}>{event.title}</span>
-        <span style={{ flex: 2 }}>
+        <span style={{ flex: 16 }}>{renderTitle(event)}</span>
+        <span style={{ flex: 7 }}>
           {formatList(map<string, DateTime>(parse, dates))}
         </span>
-        <span style={{ flex: 2 }}>{locations.join(", ")}</span>
+        <span style={{ flex: 9 }}>{locations.join(", ")}</span>
       </>
     )
   }
@@ -26,15 +36,14 @@ export const EventTable = ({ events }: { events: Events }) => {
   return (
     <ul className="events-list">
       {events.map((event) => (
-        <Link key={event.slug} href={`/archiv/${event.slug}`}>
-          <li
-            style={{
-              color: event.backgroundColor?.hex || "#000",
-            }}
-          >
-            {renderEvent(event)}
-          </li>
-        </Link>
+        <li
+          key={event.title}
+          style={{
+            color: event.backgroundColor?.hex || "#000",
+          }}
+        >
+          {renderEvent(event)}
+        </li>
       ))}
     </ul>
   )
