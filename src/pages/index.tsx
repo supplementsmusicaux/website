@@ -18,7 +18,7 @@ interface Props {
   content: HomeQuery["content"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const cutoffDate = DateTime.now().minus({ weeks: 2 }).toISODate()
+  const cutoffDate = DateTime.now().minus({ weeks: 1 }).toISODate()
   const { data } = await client.query({
     query: gql(`
       query Home($cutoffDate: Date!) {
