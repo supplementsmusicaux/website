@@ -192,6 +192,16 @@ a {
   padding-bottom: 0;
 }
 
+.text-styles hr {
+  display: block;
+  height: 0;
+  margin: 16px 0 24px 0;
+  padding: 0;
+
+  border: 0;
+  border-top: 2px solid var(--white-20);
+}
+
 .text-styles h3,
 .text-styles h4,
 .text-styles p,
