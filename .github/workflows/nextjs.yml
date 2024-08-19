@@ -13,8 +13,8 @@ on:
   workflow_dispatch:
 
   # Run this workflow every 30min
-  schedule:
-    - cron: "0 3 * * *"
+  # schedule:
+  #   - cron: "0 3 * * *"
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
