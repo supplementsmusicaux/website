@@ -17,7 +17,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await client.query({
     query: gql(`
       query PagePaths {
-        pages {
+        pages(first: 100) {
           slug
         }
       }
