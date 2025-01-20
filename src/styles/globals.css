@@ -236,7 +236,9 @@ a {
 /* hero element (home) */
 
 .hero {
-  background: linear-gradient(167deg, var(--red) 14.54%, var(--red-0) 100%), var(--blue);
+  /* background: linear-gradient(167deg, var(--red) 14.54%, var(--red-0) 100%), var(--blue); */
+  background: linear-gradient(167deg, var(--black) 14.54%, var(--black-20) 100%), var(--black-20);
+  /* background-color: #000; */
 }
 .hero .text-styles  {
   margin-top: 16px;
