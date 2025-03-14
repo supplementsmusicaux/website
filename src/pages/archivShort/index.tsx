@@ -9,6 +9,7 @@ import client from "../../apollo-client"
 import { EventsQuery } from "../../__generated__/graphql"
 import { formatList, parse } from "../../utils"
 import { Layout } from "../../components/Layout"
+import { projectDetailPath } from "../../domain"
 
 interface Props {
   events: EventsQuery["events"]
@@ -78,7 +79,7 @@ export default function Events({ events, pages }: Props) {
       <div className="main-col">
         <ul className="events-list">
           {events.map((event) => (
-            <Link key={event.slug} href={`/archiv/${event.slug}`}>
+            <Link key={event.slug} href={projectDetailPath(event.slug)}>
               <li
                 style={{
                   color: event.backgroundColor?.hex || "#000",

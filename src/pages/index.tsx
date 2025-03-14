@@ -11,6 +11,7 @@ import client from "../apollo-client"
 import { HomeQuery } from "../__generated__/graphql"
 import { EventContainer, EventTable, NewsletterSignupForm } from "../components"
 import { parse, formatList } from "../utils"
+import { archiveStartingPath, projectDetailPath } from "../domain"
 
 interface Props {
   events: HomeQuery["events"]
@@ -91,7 +92,9 @@ export default function Home({ events, pages, content }: Props) {
         <ReactMarkdown>{event.description || ""}</ReactMarkdown>
         <p>
           <br />
-          <Link href={`/archiv/${event.slug}`}>Weitere Informationen</Link>
+          <Link href={projectDetailPath(event.slug)}>
+            Weitere Informationen
+          </Link>
         </p>
       </EventContainer>
     )
@@ -131,7 +134,7 @@ export default function Home({ events, pages, content }: Props) {
       <div className="main-col text-styles">
         <p>
           Schau dir die vergangenen Veranstaltungen im{" "}
-          <Link href="/archiv">Archiv</Link> an.
+          <Link href={archiveStartingPath}>Archiv</Link> an.
         </p>
       </div>
 

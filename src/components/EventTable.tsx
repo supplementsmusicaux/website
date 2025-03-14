@@ -4,6 +4,7 @@ import { DateTime } from "luxon"
 
 import { formatList, parse } from "../utils"
 import { HomeQuery } from "../__generated__/graphql"
+import { projectDetailPath } from "../domain"
 
 type Events = HomeQuery["events"]
 
@@ -16,7 +17,7 @@ export const EventTable = ({ events }: { events: Events }) => {
       if (event.previewOnly) return event.title
 
       return (
-        <Link key={event.slug} href={`/archiv/${event.slug}`}>
+        <Link key={event.slug} href={projectDetailPath(event.slug)}>
           {event.title}
         </Link>
       )

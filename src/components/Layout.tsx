@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { get, sortBy } from "lodash/fp"
 import { Logo } from "./Logo"
+import { archiveStartingPath, lastActiveYear } from "../domain"
 
 interface Page {
   slug: string
@@ -15,11 +16,11 @@ interface Props {
 }
 
 export const Layout = ({ pages, children, isHome }: Props) => {
-  const allPages = sortBy(get("menuPosition"))([
+  const allPages: Page[] = sortBy(get("menuPosition"))([
     ...pages,
     {
       menuPosition: 0,
-      slug: "archiv",
+      slug: archiveStartingPath,
       title: "vergangenes",
     },
   ])
@@ -43,11 +44,14 @@ export const Layout = ({ pages, children, isHome }: Props) => {
           )}
         </h1>
         <ul>
-          {allPages.map((page) => (
-            <li key={page.slug}>
-              <Link href={`/${page.slug}`}>{page.title}</Link>
-            </li>
-          ))}
+          {allPages.map((page) => {
+            const href = page.slug.startsWith("/") ? page.slug : `/${page.slug}`
+            return (
+              <li key={page.slug}>
+                <Link href={href}>{page.title}</Link>
+              </li>
+            )
+          })}
         </ul>
       </div>
       <main>{children}</main>

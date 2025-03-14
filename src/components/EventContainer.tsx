@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { projectDetailPath } from "../domain"
 
 interface Props {
   slug: string
@@ -46,7 +47,7 @@ export const EventContainer = ({
               : undefined
           }
         >
-          <Link href={`/archiv/${slug}`}>
+          <Link href={projectDetailPath(slug)}>
             <h3>{title}</h3>
           </Link>
           {children}
