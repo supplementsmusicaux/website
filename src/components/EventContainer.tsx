@@ -31,12 +31,14 @@ export const EventContainer = ({
       }
     >
       <div className="event-wrapper main-col text-styles inverted">
-        <div className="flyer">
-          {flyerUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={flyerUrl} alt={`Flyer für das Projekt "${title}"`} />
-          )}
-        </div>
+        {flyerUrl && (
+          <div className="flyer">
+            {
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={flyerUrl} alt={`Flyer für das Projekt "${title}"`} />
+            }
+          </div>
+        )}
         <div
           className="info"
           style={

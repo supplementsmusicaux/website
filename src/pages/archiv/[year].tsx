@@ -101,7 +101,7 @@ export default function EventsPerYearPage({ events, pages, year }: Props) {
   return (
     <Layout pages={pages}>
       <div className="main-col text-styles text-page">
-        <h3>Archiv für das Jahr {year}</h3>
+        <h3>Projekte im Jahr {year}</h3>
         <YearsLinkBox selectedYear={year} />
       </div>
       {events.map((event) => (
@@ -127,6 +127,9 @@ export default function EventsPerYearPage({ events, pages, year }: Props) {
           <ReactMarkdown>{event.details || ""}</ReactMarkdown>
         </EventContainer>
       ))}
+      <div className="main-col text-styles text-page">
+        <YearsLinkBox selectedYear={year} />
+      </div>
     </Layout>
   )
 }
