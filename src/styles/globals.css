@@ -228,6 +228,7 @@ a {
 .text-styles.inverted a:hover,
 .text-styles.inverted a:active,
 .text-styles.inverted a h3,
+.text-styles.inverted h3.full,
 .text-styles.inverted a:visited h3
  {
   color: var(--white);

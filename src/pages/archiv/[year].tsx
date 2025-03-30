@@ -5,7 +5,7 @@ import { gql } from "../../__generated__/gql"
 import client from "../../apollo-client"
 import { EventsPerYearQuery } from "../../__generated__/graphql"
 import { EventContainer, EventTable } from "../../components"
-import { format, parse } from "../../utils"
+import { format, formatShort, parse } from "../../utils"
 import { Layout } from "../../components/Layout"
 import { activeYears, firstActiveYear } from "../../domain"
 import Link from "next/link"
@@ -33,7 +33,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
       query EventsPerYear($year: String) {
         events(
           where: {
-            slug_starts_with: $year
+            slug_starts_with: $year,
+            previewOnly: false
           },
           first: 100,
           orderBy: activeUntil_DESC
@@ -112,12 +113,13 @@ export default function EventsPerYearPage({ events, pages, year }: Props) {
           backgroundColor={event.backgroundColor?.hex}
           textColor={event.textColor?.hex}
           flyerUrl={event.flyer?.url}
+          omitDetailLink
         >
           <ul>
             {event.performances.map((performance) => (
               <li key={performance.startingAt}>
                 {[
-                  format(parse(performance.startingAt)),
+                  formatShort(parse(performance.startingAt)),
                   performance.location,
                 ].join(", ")}
               </li>

@@ -25,11 +25,11 @@ export const EventTable = ({ events }: { events: Events }) => {
 
     return (
       <>
-        <span style={{ flex: 16 }}>{renderTitle(event)}</span>
-        <span style={{ flex: 7 }}>
+        <span style={{ flex: 2 }}>{renderTitle(event)}</span>
+        <span style={{ flex: 2 }}>
           {formatList(map<string, DateTime>(parse, dates))}
         </span>
-        <span style={{ flex: 9 }}>{locations.join(", ")}</span>
+        <span style={{ flex: 3 }}>{locations.join(", ")}</span>
       </>
     )
   }

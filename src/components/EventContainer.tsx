@@ -8,6 +8,7 @@ interface Props {
   textColor?: string
   flyerUrl?: string
   children: React.ReactNode
+  omitDetailLink?: boolean
 }
 
 export const EventContainer = ({
@@ -17,6 +18,7 @@ export const EventContainer = ({
   textColor,
   flyerUrl,
   children,
+  omitDetailLink = false,
 }: Props) => {
   return (
     <div
@@ -49,9 +51,13 @@ export const EventContainer = ({
               : undefined
           }
         >
-          <Link href={projectDetailPath(slug)}>
-            <h3>{title}</h3>
-          </Link>
+          {omitDetailLink ? (
+            <h3 className="full">{title}</h3>
+          ) : (
+            <Link href={projectDetailPath(slug)}>
+              <h3>{title}</h3>
+            </Link>
+          )}
           {children}
         </div>
       </div>
