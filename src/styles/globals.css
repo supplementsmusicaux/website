@@ -167,6 +167,10 @@ a {
   font-size: .95rem;
   letter-spacing: 0.025em;
 }
+.text-styles .info ul li::before {
+  content: "—";
+  padding-right: 4px;
+}
 .text-styles p {
   max-width: 520px;
   padding-bottom: 8px;
