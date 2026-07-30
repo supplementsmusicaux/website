@@ -69,9 +69,9 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 }
 
 export default function Home({ events, pages, content }: Props) {
-  const [event, ...nextEvents] = events
+  const [e1, e2, ...nextEvents] = events
 
-  const renderCurrentEvent = () => {
+  const renderEvent = (event: (typeof events)[number]) => {
     const dates = map(get("startingAt"), event.performances)
     const locations: string[] = uniq(map(get("location"), event.performances))
 
@@ -120,7 +120,10 @@ export default function Home({ events, pages, content }: Props) {
         <h4>aktuell</h4>
       </div>
 
-      <div className="events-wrapper">{renderCurrentEvent()}</div>
+      <div className="events-wrapper">
+        {renderEvent(e1)}
+        {renderEvent(e2)}
+      </div>
 
       {nextEvents.length > 0 && (
         <div className="main-col events-list-wrapper">
