@@ -6,49 +6,48 @@ import { DateTime } from "luxon"
 
 import { gql } from "../../__generated__/gql"
 import client from "../../apollo-client"
-import { EventsQuery } from "../../__generated__/graphql"
+import { EventsQuery, NavQuery } from "../../__generated__/graphql"
 import { formatList, parse } from "../../utils"
 import { Layout } from "../../components/Layout"
 import { projectDetailPath } from "../../domain"
+import { getNavPages } from "../../nav"
 
 interface Props {
   events: EventsQuery["events"]
-  pages: EventsQuery["pages"]
+  pages: NavQuery["pages"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const today = DateTime.now().toISODate()
-  const { data } = await client.query({
-    query: gql(`
-      query Events($today: Date!) {
-        events(first: 100, where: {previewOnly: false, activeUntil_lt: $today}, orderBy: activeUntil_DESC) {
-          slug
-          title
+  const [{ data }, pages] = await Promise.all([
+    client.query({
+      query: gql(`
+        query Events($today: Date!) {
+          events(first: 100, where: {previewOnly: false, activeUntil_lt: $today}, orderBy: activeUntil_DESC) {
+            slug
+            title
 
-          backgroundColor {
-            hex
-          }
+            backgroundColor {
+              hex
+            }
 
-          performances(orderBy: startingAt_ASC) {
-            startingAt
-            location
+            performances(orderBy: startingAt_ASC) {
+              startingAt
+              location
+            }
           }
         }
-        pages (where: { menuPosition_not: null }) {
-          slug
-          menuPosition
-          title
-        }
-      }
-    `),
-    variables: {
-      today,
-    },
-  })
+      `),
+      variables: {
+        today,
+      },
+    }),
+    getNavPages(),
+  ])
 
   return {
     props: {
       events: data.events,
-      pages: data.pages,
+      pages,
     },
   }
 }

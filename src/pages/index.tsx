@@ -8,61 +8,60 @@ import Link from "next/link"
 import { Layout } from "../components/Layout"
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
-import { HomeQuery } from "../__generated__/graphql"
+import { HomeQuery, NavQuery } from "../__generated__/graphql"
 import { EventContainer, EventTable, NewsletterSignupForm } from "../components"
 import { parse, formatList } from "../utils"
 import { archiveStartingPath, projectDetailPath } from "../domain"
+import { getNavPages } from "../nav"
 
 interface Props {
   events: HomeQuery["events"]
-  pages: HomeQuery["pages"]
+  pages: NavQuery["pages"]
   content: HomeQuery["content"]
 }
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const cutoffDate = DateTime.now().minus({ weeks: 1 }).toISODate()
-  const { data } = await client.query({
-    query: gql(`
-      query Home($cutoffDate: Date!) {
-        events(where: {activeUntil_gte: $cutoffDate}, orderBy: activeUntil_ASC) {
-          slug
-          title
-          description
-          previewOnly
+  const [{ data }, pages] = await Promise.all([
+    client.query({
+      query: gql(`
+        query Home($cutoffDate: Date!) {
+          events(where: {activeUntil_gte: $cutoffDate}, orderBy: activeUntil_ASC) {
+            slug
+            title
+            description
+            previewOnly
 
-          flyer {
-            url
-          }
-          backgroundColor {
-            hex
-          }
-          textColor {
-            hex
-          }
+            flyer {
+              url
+            }
+            backgroundColor {
+              hex
+            }
+            textColor {
+              hex
+            }
 
-          performances(orderBy: startingAt_ASC) {
-            startingAt
-            location
+            performances(orderBy: startingAt_ASC) {
+              startingAt
+              location
+            }
+          }
+          content: pages (where: { slug: "startseite" }) {
+            content
           }
         }
-        pages (where: { menuPosition_not: null }) {
-          slug
-          menuPosition
-          title
-        }
-        content: pages (where: { slug: "startseite" }) {
-          content
-        }
-      }
-    `),
-    variables: {
-      cutoffDate,
-    },
-  })
+      `),
+      variables: {
+        cutoffDate,
+      },
+    }),
+    getNavPages(),
+  ])
 
   return {
     props: {
       events: data.events,
-      pages: data.pages,
+      pages,
       content: data.content,
     },
   }

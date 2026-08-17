@@ -3,14 +3,15 @@ import ReactMarkdown from "react-markdown"
 
 import { gql } from "../__generated__/gql"
 import client from "../apollo-client"
-import { PageQuery } from "../__generated__/graphql"
+import { PageQuery, NavQuery } from "../__generated__/graphql"
 import { Layout } from "../components/Layout"
 import { NewsletterSignupForm } from "../components"
+import { getNavPages } from "../nav"
 
 interface Props {
   slug?: string
   page: PageQuery["page"]
-  pages: PageQuery["pages"]
+  pages: NavQuery["pages"]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -32,32 +33,30 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const slug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug
-  const { data } = await client.query({
-    query: gql(
+  const [{ data }, pages] = await Promise.all([
+    client.query({
+      query: gql(
+        `
+        query Page($slug: String) {
+          page(where: { slug: $slug }) {
+            title
+            slug
+            menuPosition
+            content
+          }
+        }
       `
-      query Page($slug: String) {
-        page(where: { slug: $slug }) {
-          title
-          slug
-          menuPosition
-          content
-        }
-        pages (where: { menuPosition_not: null }) {
-          slug
-          menuPosition
-          title
-        }
-      }
-    `
-    ),
-    variables: { slug },
-  })
+      ),
+      variables: { slug },
+    }),
+    getNavPages(),
+  ])
 
   return {
     props: {
       slug,
       page: data.page,
-      pages: data.pages,
+      pages,
     },
   }
 }

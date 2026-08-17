@@ -3,14 +3,15 @@ import ReactMarkdown from "react-markdown"
 
 import { gql } from "../../__generated__/gql"
 import client from "../../apollo-client"
-import { EventQuery } from "../../__generated__/graphql"
+import { EventQuery, NavQuery } from "../../__generated__/graphql"
 import { EventContainer } from "../../components"
 import { format, parse } from "../../utils"
 import { Layout } from "../../components/Layout"
+import { getNavPages } from "../../nav"
 
 interface Props {
   event: EventQuery["event"]
-  pages: EventQuery["pages"]
+  pages: NavQuery["pages"]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -32,45 +33,43 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const slug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug
-  const { data } = await client.query({
-    query: gql(
+  const [{ data }, pages] = await Promise.all([
+    client.query({
+      query: gql(
+        `
+        query Event($slug: String) {
+          event(where: { slug: $slug }) {
+            slug
+            title
+            details
+
+            flyer {
+              url
+            }
+            backgroundColor {
+              hex
+            }
+            textColor {
+              hex
+            }
+
+            performances(orderBy: startingAt_ASC) {
+              startingAt
+              location
+            }
+          }
+        }
       `
-      query Event($slug: String) {
-        event(where: { slug: $slug }) {
-          slug
-          title
-          details
-
-          flyer {
-            url
-          }
-          backgroundColor {
-            hex
-          }
-          textColor {
-            hex
-          }
-
-          performances(orderBy: startingAt_ASC) {
-            startingAt
-            location
-          }
-        }
-        pages (where: { menuPosition_not: null }) {
-          slug
-          menuPosition
-          title
-        }
-      }
-    `
-    ),
-    variables: { slug },
-  })
+      ),
+      variables: { slug },
+    }),
+    getNavPages(),
+  ])
 
   return {
     props: {
       event: data.event,
-      pages: data.pages,
+      pages,
     },
   }
 }

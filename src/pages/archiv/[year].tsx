@@ -3,16 +3,17 @@ import ReactMarkdown from "react-markdown"
 
 import { gql } from "../../__generated__/gql"
 import client from "../../apollo-client"
-import { EventsPerYearQuery } from "../../__generated__/graphql"
+import { EventsPerYearQuery, NavQuery } from "../../__generated__/graphql"
 import { EventContainer, EventTable } from "../../components"
 import { format, formatShort, parse } from "../../utils"
 import { Layout } from "../../components/Layout"
 import { activeYears, firstActiveYear } from "../../domain"
+import { getNavPages } from "../../nav"
 import Link from "next/link"
 
 interface Props {
   events: EventsPerYearQuery["events"]
-  pages: EventsPerYearQuery["pages"]
+  pages: NavQuery["pages"]
   year: string
 }
 
@@ -27,52 +28,50 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   let year = Array.isArray(params?.year) ? params?.year[0] : params?.year
   year = year ? year : firstActiveYear.toString()
 
-  const { data } = await client.query({
-    query: gql(
+  const [{ data }, pages] = await Promise.all([
+    client.query({
+      query: gql(
+        `
+        query EventsPerYear($year: String) {
+          events(
+            where: {
+              slug_starts_with: $year,
+              previewOnly: false
+            },
+            first: 100,
+            orderBy: activeUntil_DESC
+          ) {
+            slug
+            title
+            details
+
+            flyer {
+              url
+            }
+            backgroundColor {
+              hex
+            }
+            textColor {
+              hex
+            }
+
+            performances(orderBy: startingAt_ASC) {
+              startingAt
+              location
+            }
+          }
+        }
       `
-      query EventsPerYear($year: String) {
-        events(
-          where: {
-            slug_starts_with: $year,
-            previewOnly: false
-          },
-          first: 100,
-          orderBy: activeUntil_DESC
-        ) {
-          slug
-          title
-          details
-
-          flyer {
-            url
-          }
-          backgroundColor {
-            hex
-          }
-          textColor {
-            hex
-          }
-
-          performances(orderBy: startingAt_ASC) {
-            startingAt
-            location
-          }
-        }
-        pages (where: { menuPosition_not: null }) {
-          slug
-          menuPosition
-          title
-        }
-      }
-    `
-    ),
-    variables: { year },
-  })
+      ),
+      variables: { year },
+    }),
+    getNavPages(),
+  ])
 
   return {
     props: {
       events: data.events,
-      pages: data.pages,
+      pages,
       year,
     },
   }
